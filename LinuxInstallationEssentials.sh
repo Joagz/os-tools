@@ -25,25 +25,52 @@ INSTALL_VSCODE=$(ask_question "1. Install Visual Studio Code?")
 INSTALL_LATEX=$(ask_question "2. Install LaTeX (texlive-full)?")
 INSTALL_CMAKE_GIT=$(ask_question "4. Install CMake, Git, and GitHub CLI?")
 INSTALL_ROS2=$(ask_question "5. Install ROS2 Humble Hawksbill?")
+INSTALL_DOCKER=$(ask_question "5. Install Docker and Docker Desktop?")
 
-    echo "=============================="
-    echo "INSTALLING: Python3 and Related Tools"
-    echo "=============================="
-    sudo apt update || handle_error
-    sudo apt install python3 python3-pip -y || handle_error
-    sudo apt install python3-flake8-docstrings \
-        python3-pytest-cov \
-        python3-flake8-blind-except \
-        python3-flake8-builtins \
-        python3-flake8-class-newline \
-        python3-flake8-comprehensions \
-        python3-flake8-deprecated \
-        python3-flake8-import-order \
-        python3-flake8-quotes \
-        python3-pytest-repeat \
-        python3-pytest-rerunfailures -y || handle_error
+echo "=============================="
+echo "INSTALLING: Python3 and Related Tools"
+echo "=============================="
+sudo apt update || handle_error
+sudo apt install python3 python3-pip -y || handle_error
+sudo apt install python3-flake8-docstrings \
+    python3-pytest-cov \
+    python3-flake8-blind-except \
+    python3-flake8-builtins \
+    python3-flake8-class-newline \
+    python3-flake8-comprehensions \
+    python3-flake8-deprecated \
+    python3-flake8-import-order \
+    python3-flake8-quotes \
+    python3-pytest-repeat \
+    python3-pytest-rerunfailures -y || handle_error
 
 # ==============================
+
+# ==============================
+# Install Docker & Docker Desktop
+# ==============================
+if [ "$INSTALL_DOCKER" == "yes" ]; then
+
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+echo "Checking docker is successfully running"
+sudo docker run hello-world
+fi
+
 
 # ==============================
 # Install Visual Studio Code
