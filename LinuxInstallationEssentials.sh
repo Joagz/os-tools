@@ -20,6 +20,7 @@ function ask_question {
 # ==============================
 # User Prompts
 # ==============================
+echo "Ubuntu 22.04 Installation essentials - Joaquín Gómez"
 echo "Select which components to install:"
 INSTALL_VSCODE=$(ask_question "1. Install Visual Studio Code?")
 INSTALL_LATEX=$(ask_question "2. Install LaTeX (texlive-full)?")
