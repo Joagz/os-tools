@@ -26,7 +26,8 @@ INSTALL_VSCODE=$(ask_question "1. Install Visual Studio Code?")
 INSTALL_LATEX=$(ask_question "2. Install LaTeX (texlive-full)?")
 INSTALL_CMAKE_GIT=$(ask_question "4. Install CMake, Git, and GitHub CLI?")
 INSTALL_ROS2=$(ask_question "5. Install ROS2 Humble Hawksbill?")
-INSTALL_DOCKER=$(ask_question "5. Install Docker and Docker Desktop?")
+INSTALL_GAZEBO=$(ask_question "6. Install Gazebo (Fortress)?")
+INSTALL_DOCKER=$(ask_question "7. Install Docker and Docker Desktop?")
 
 echo "=============================="
 echo "INSTALLING: Python3 and Related Tools"
@@ -72,6 +73,16 @@ echo "Checking docker is successfully running"
 sudo docker run hello-world
 fi
 
+
+if [ "$INSTALL_GAZEBO" == "yes" ]; then
+sudo apt-get update
+sudo apt-get install lsb-release gnupg
+
+sudo curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+sudo apt-get update
+sudo apt-get install ignition-fortress
+fi
 
 # ==============================
 # Install Visual Studio Code
