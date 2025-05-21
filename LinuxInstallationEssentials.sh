@@ -169,6 +169,7 @@ if [ "$INSTALL_ROS2" == "yes" ]; then
     
     # Add to .bashrc
     echo "source /opt/ros/humble/setup.sh" >> ~/.bashrc || handle_error
+    echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc 
 fi
 
 echo -e "\nAll selected installations completed successfully! -- Joaquín"
