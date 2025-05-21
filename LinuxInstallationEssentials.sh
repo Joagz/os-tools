@@ -73,7 +73,9 @@ echo "Checking docker is successfully running"
 sudo docker run hello-world
 fi
 
-
+# ==============================
+# Install Gazebo
+# ==============================
 if [ "$INSTALL_GAZEBO" == "yes" ]; then
 sudo apt-get update
 sudo apt-get install lsb-release gnupg
